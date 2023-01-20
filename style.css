@@ -59,4 +59,58 @@ html, body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+    gap: 150px;
+    padding: 50px;
+}
+
+.book-card {
+    border: 3px black solid;
+    height: 350px;
+    width: 250px;
+    background-image: url("./assets/book-cover.jpeg");
+    background-size: contain;
+}
+
+.book-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.book-top-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 15px; */
+    width: 100%;
+}
+
+.book-top-row > button {
+    width: 45px;
+    height: 45px;
+    margin: 15px;
+}
+
+.book-pages {
+    background-color: grey;
+    width: 90%;
+    height: 20%;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    border-radius: 25px;
+    margin-bottom: 10px;
+}
+
+.book-title-author {
+    font-size: 24px;
+    color: aliceblue;
+    display: none;
+}
+
+.book-card:hover .book-title-author {
+    display: block;
 }
