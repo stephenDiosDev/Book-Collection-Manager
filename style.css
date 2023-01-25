@@ -1,3 +1,12 @@
+/* Colour palette: https://coolors.co/eacda0-74533e-5f3c24-442a1c-956d47 */
+:root {
+    --very-light-brown: #eacda0;
+    --pale-dark-brown: #74533e;
+    --rich-dark-brown: #5f3c24;
+    --dark-dark-brown: #442a1c;
+    --light-brown: #956d47;
+}
+
 html, body {
     margin: 0;
     height: 100%;
@@ -36,13 +45,40 @@ html, body {
 }
 
 .sidebar {
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
+    background-color: var(--light-brown);
     grid-row: 1 / 3;
     grid-column: 1 / 2;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+}
+
+.book-form {
+    box-sizing: border-box;
+}
+
+.book-form-list > li {
+    padding: 10px;
+    margin: 10px 0;
+}
+
+input[type=text], input[type=number] {
+    padding: 10px;
+    margin: 10px 0;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+    border-radius: 10px;
+    width: 90%;
+}
+
+input[type=number] {
+    width: 50%;
+}
+
+.book-form-list {
+    list-style: none;
+    padding: 0;
 }
 
 .stats-list {
@@ -84,7 +120,6 @@ html, body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /* padding: 15px; */
     width: 100%;
 }
 
