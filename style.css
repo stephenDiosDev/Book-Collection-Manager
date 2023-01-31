@@ -149,12 +149,6 @@ input[type=number] {
     width: 100%;
 }
 
-.book-top-row > button {
-    width: 45px;
-    height: 45px;
-    margin: 15px;
-}
-
 .book-pages {
     background-color: grey;
     width: 90%;
@@ -231,4 +225,90 @@ input[type=number] {
     border-radius: 10px;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+/* slider switch 
+    taken from: https://www.w3schools.com/howto/howto_css_switch.asp
+*/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-right: 15px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* background-color: #ccc; */
+    background-color: var(--very-light-brown);
+    -webkit-trasnition: 0.4s;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    bottom: 4px;
+    left: 4px;
+    /* background-color: white; */
+    background-color: var(--light-brown);
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    /* background-color: #2196f3; */
+    background-color: var(--rich-dark-brown);
+}
+
+input:focus + .slider {
+    /* box-shadow: 0 0 1px #2196f3; */
+    box-shadow: 0 0 1px var(--rich-dark-brown);
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Book delete X button */
+.book-delete {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--light-brown);
+    width: 100%;
+    height: 100%;
+}
+
+.book-top-row > button {
+    width: 35px;
+    height: 35px;
+    margin: 15px;
+    border-radius: 30%;
+}
+
+.book-delete-icon {
+    color: var(--very-light-brown);
+    font-size: 50px;
+    font-family: 'Courier New', Courier, monospace;
 }
