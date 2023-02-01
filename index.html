@@ -39,8 +39,12 @@
                                 <input type="text" name="title" id="title" required pattern="[a-zA-Z]+*">
                             </li>
                             <li>
-                                <label for="num-pages">Number of Pages</label>
+                                <label for="num-pages">Number of Current Pages</label>
                                 <input type="number" name="num-pages" id="num-pages" required min="1">
+                            </li>
+                            <li>
+                                <label for="num-pages-total">Number of Total Pages</label>
+                                <input type="number" name="num-pages-total" id="num-pages-total" required min="1">
                             </li>
                             <li>
                                 <label for="read">Have you read it?</label>
@@ -84,7 +88,9 @@
                         <h3>Author Name</h3>
                     </div>
                     <div class="book-pages">
-                        <p>Pages: 125</p>
+                        <p>Pages: </p>
+                        <input type="text" name="current-pages" id="current-pages">
+                        <p>/ XXXX</p>
                     </div>
                 </div>
             </div>
