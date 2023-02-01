@@ -1,7 +1,6 @@
 /* Colour palette: https://coolors.co/eacda0-74533e-5f3c24-442a1c-956d47 */
 :root {
-    --very-light-brown: #eacda0;
-    --pale-dark-brown: #74533e;
+    --very-light-brown: #eacda0; 
     --rich-dark-brown: #5f3c24;
     --dark-dark-brown: #442a1c;
     --light-brown: #956d47;
@@ -11,12 +10,20 @@
     --pale-blue: #96ace5; 
     --gold: #fdc62c; 
     --red: #da3931; 
-    --pale-black: #414453; 
+    --pale-black: #414453;
     --dark-blue: #2d5399; 
     --pale-dark-brown: #595f6d; 
     --orange-brown: #9a534d;
     --pale-gold: #FCF5BD;
 }
+
+@layer base {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
 
 html, body {
     margin: 0;
@@ -97,11 +104,17 @@ input:valid {
     margin: 10px 0;
 }
 
+.book-form-list > li > input {
+    background-color: var(--pale-blue);
+}
+
 .book-form-list > li > button {
     width: 130px;
     height: 40px;
     font-size: 20px;
     border-radius: 10px;
+    background-color: var(--pale-blue);
+    color: var(--pale-gold);
 }
 
 input[type=text], input[type=number] {
@@ -166,6 +179,7 @@ fieldset {
     width: 250px;
     background-image: url("./assets/blue-book.jpg");
     background-size: contain;
+    border-radius: 20px;
 }
 
 .book-col {
@@ -188,11 +202,11 @@ fieldset {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color: var(--pale-dark-brown);
+    background-color: var(--green);
     width: 90%;
     height: 15%;
-    color: var(--very-light-brown);
-    border: 3px solid var(--dark-dark-brown);
+    color: var(--pale-gold);
+    border: 3px solid var(--pale-black);
     font-size: 24px;
     /* text-align: center; */
     border-radius: 25px;
@@ -202,7 +216,14 @@ fieldset {
 #current-pages {
     max-width: 15%;
     height: 20%;
-    background-color: blue;
+    background-color: var(--green);
+    border: 2px dashed var(--pale-black);
+}
+
+#current-pages:focus {
+    outline: none !important;
+    border: 2px solid var(--pale-black);
+    box-shadow: 0 0 5px var(--pale-black);
 }
 
 .book-title-author {
@@ -278,7 +299,7 @@ fieldset {
     width: 60px;
     height: 34px;
     margin-right: 15px;
-    border: 2px solid var(--dark-dark-brown);
+    border: 2px solid var(--pale-black);
     border-radius: 34px;
 }
 
@@ -296,7 +317,7 @@ fieldset {
     right: 0;
     bottom: 0;
     /* background-color: #ccc; */
-    background-color: var(--very-light-brown);
+    background-color: var(--orange-brown);
     -webkit-trasnition: 0.4s;
     transition: 0.4s;
     border-radius: 34px;
@@ -310,7 +331,7 @@ fieldset {
     bottom: 4px;
     left: 4px;
     /* background-color: white; */
-    background-color: var(--light-brown);
+    background-color: var(--pale-gold);
     -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 50%;
@@ -319,13 +340,12 @@ fieldset {
 
 input:checked + .slider {
     /* background-color: #2196f3; */
-    background-color: var(--rich-dark-brown);
+    background-color: var(--green);
 }
 
-input:focus + .slider {
-    /* box-shadow: 0 0 1px #2196f3; */
-    box-shadow: 0 0 1px var(--rich-dark-brown);
-}
+/* input:focus + .slider {
+    box-shadow: 0 0 1px var(--red);
+} */
 
 input:checked + .slider:before {
     -webkit-transform: translateX(26px);
@@ -340,7 +360,7 @@ input:checked + .slider:before {
     cursor: pointer;
     justify-content: center;
     align-items: center;
-    background-color: var(--light-brown);
+    background-color: var(--pale-dark-brown);
     width: 100%;
     height: 100%;
 }
@@ -353,7 +373,7 @@ input:checked + .slider:before {
 }
 
 .book-delete-icon {
-    color: var(--very-light-brown);
+    color: var(--red);
     font-size: 50px;
     font-family: 'Courier New', Courier, monospace;
 }
