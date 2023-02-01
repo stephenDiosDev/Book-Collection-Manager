@@ -26,7 +26,6 @@ html, body {
 .content {
     background-color: var(--pale-black);
     position: relative;
-    z-index: -1;
 }
 
 .main {
@@ -48,6 +47,8 @@ html, body {
     padding-right: 150px;
     border: 5px solid var(--dark-dark-brown);
     box-shadow: rgba(0, 0, 0, 0.65) 10px 5px 15px;
+    position: relative;
+    z-index: 1;
 }
 
 .login-with-icon {
@@ -74,6 +75,8 @@ html, body {
     flex-direction: column;
     justify-content: space-around; 
     align-items: center;
+    position: relative;
+    z-index: 2;
 }
 
 .book-form {
