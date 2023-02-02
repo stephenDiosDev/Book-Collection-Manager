@@ -17,3 +17,11 @@ const book2 = new Book("Dresden Files Book 1", "Some dude idk", 167, true);
 
 console.log(book1.getInfo());
 console.log(book2.getInfo());
+
+
+//////////////////////////////////////////////////////////////////
+let formBtn = document.querySelector(".form-submit-button");
+
+formBtn.addEventListener('click', function(e) {
+    console.log("A BUTTON WAS CLICKED!");
+});
