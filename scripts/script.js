@@ -21,7 +21,13 @@ console.log(book2.getInfo());
 
 //////////////////////////////////////////////////////////////////
 let formBtn = document.querySelector(".form-submit-button");
+let loginBanner = document.querySelector(".login-text");
 
 formBtn.addEventListener('click', function(e) {
-    console.log("A BUTTON WAS CLICKED!");
+    if(loginBanner.textContent == "FLIP") {
+        loginBanner.textContent = "FLOP";
+    }
+    else {
+        loginBanner.textContent = "FLIP";
+    }
 });
