@@ -1,18 +1,12 @@
 let myLibrary = [];
 let bookshelf = document.querySelector(".content");
 
-function Book(title, author, pages, read) {
+function Book(title, author, currentPages, totalPages, read) {
     this.title = title;
     this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.getInfo = function() {
-        if(this.read === false) {
-            return this.title+ ' by ' + this.author + ', ' + this.pages + ' pages, not read yet'
-        } else {
-            return this.title+ ' by ' + this.author + ', ' + this.pages + ' pages, read'
-        }
-    }
+    this.currentPages = currentPages;
+    this.totalPages = totalPages
+    this.read = true;
 }
 
 // TODO extend this to use the DOM input (pushing the add book btn will construct it)
@@ -37,7 +31,7 @@ function addBookToLibrary(book) {
     let deleteIcon = document.createElement('span');
     deleteIcon.classList.add("book-delete-icon");
 
-    deleteIcon.innerText = "&times";
+    deleteIcon.innerHTML = "&times";    //need innerHTML here because &times is an html symbol
     deleteBtn.appendChild(deleteIcon);
 
     //slider switch
@@ -49,6 +43,8 @@ function addBookToLibrary(book) {
     let sliderSwitch = document.createElement('span');
     sliderSwitch.classList.add("slider");
 
+    checkBoxSwitch.checked = book.read;
+
     switchLabel.appendChild(checkBoxSwitch);
     switchLabel.appendChild(sliderSwitch);
 
@@ -57,10 +53,12 @@ function addBookToLibrary(book) {
 
     ////////////////// book title author //////////////////
     let bookTitle = document.createElement('h3');
-    bookTitle.innerText = "Book Title";
+    // bookTitle.innerText = "Book Title";
+    bookTitle.innerText = book.title;
 
     let bookAuthor = document.createElement('h3');
-    bookAuthor.innerText = "Book Author";
+    // bookAuthor.innerText = "Book Author";
+    bookAuthor.innerText = book.author;
 
     bookTitleAuthor.appendChild(bookTitle);
     bookTitleAuthor.appendChild(bookAuthor);
@@ -74,9 +72,10 @@ function addBookToLibrary(book) {
     currentPage.setAttribute("min", "1");
     currentPage.setAttribute("name", "current-pages");
     currentPage.setAttribute("id", "current-pages");
+    currentPage.value = book.currentPages;
 
     let secondp = document.createElement('p');
-    secondp.innerText = "/ 9999";
+    secondp.innerText = "/ " + book.totalPages;
 
     bookPages.appendChild(firstp);
     bookPages.appendChild(currentPage);
@@ -87,6 +86,7 @@ function addBookToLibrary(book) {
     bookCard.appendChild(bookTitleAuthor);
     bookCard.appendChild(bookPages);
 
+    bookshelf.appendChild(bookCard);
     myLibrary.push(book);
 }
 
@@ -95,22 +95,30 @@ function displayLibrary() {
         //fill out an html template and add to page
 }
 
-const book1 = new Book("The Hobbit", "J.R.R Tolkien", 295, false);
-const book2 = new Book("Dresden Files Book 1", "Some dude idk", 167, true);
-
-console.log(book1.getInfo());
-console.log(book2.getInfo());
-
 
 //////////////////////////////////////////////////////////////////
 let formBtn = document.querySelector(".form-submit-button");
-let loginBanner = document.querySelector(".login-text");
 
 formBtn.addEventListener('click', function(e) {
-    if(loginBanner.innerText == "FLIP") {
-        loginBanner.innerText = "FLOP";
-    }
-    else {
-        loginBanner.innerText = "FLIP";
-    }
+    addBookToLibrary(new Book("Test Title", "Test Author", 123, 500, true));
+    console.log("Current library:");
+    console.log(myLibrary);
 });
+
+
+
+/*
+    TODO
+
+    parse form into the Javascript book object
+        - need to do error checking here, ensuring the current pages <= total pages
+        - if read == true, currentPages = total pages and slider is checked
+    
+    when form is submitted, we parse the form into a js book object and add it to library
+        - everytime a new book is added we call display library
+        - we should check to make sure the same book doesn't already exist in the library
+    
+    displayLibrary will clear the bookshelf, and add back each book for now
+        - we can add some kind of performance mode or something to only add new books
+
+*/
