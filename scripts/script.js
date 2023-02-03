@@ -1,3 +1,5 @@
+let myLibrary = [];
+
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -10,6 +12,34 @@ function Book(title, author, pages, read) {
             return this.title+ ' by ' + this.author + ', ' + this.pages + ' pages, read'
         }
     }
+}
+
+// TODO extend this to use the DOM input (pushing the add book btn will construct it)
+function addBookToLibrary(book) {
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    myLibrary.push(book);
+}
+
+function displayLibrary() {
+    //for each book in myLibrary
+        //fill out an html template and add to page
 }
 
 const book1 = new Book("The Hobbit", "J.R.R Tolkien", 295, false);
