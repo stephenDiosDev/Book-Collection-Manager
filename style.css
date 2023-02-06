@@ -248,6 +248,10 @@ fieldset {
     /* display: none; */
 }
 
+.book-title-author > h3 {
+    text-align: center;
+}
+
 .book-card:hover .book-title-author {
     display: block;
 }

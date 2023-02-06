@@ -106,11 +106,9 @@ function displayLibrary() {
 
         ////////////////// book title author //////////////////
         let bookTitle = document.createElement('h3');
-        // bookTitle.innerText = "Book Title";
         bookTitle.innerText = book.title;
 
         let bookAuthor = document.createElement('h3');
-        // bookAuthor.innerText = "Book Author";
         bookAuthor.innerText = book.author;
 
         bookTitleAuthor.appendChild(bookTitle);
