@@ -249,7 +249,12 @@ fieldset {
 }
 
 .book-title-author > h3 {
+    max-height: 100px;
+    max-width: 160px;
     text-align: center;
+    overflow: hidden;
+    white-space: wrap;
+    text-overflow: ellipsis;
 }
 
 .book-card:hover .book-title-author {
