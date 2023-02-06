@@ -35,12 +35,14 @@ html, body {
 .content {
     background-color: var(--pale-black);
     position: relative;
+    height: auto;
 }
 
 .main {
     display: grid;
     grid-template-columns: 1fr 5fr;
-    grid-template-rows: 1fr 5fr;
+    /* grid-template-rows: 1fr 5fr; */
+    grid-template-rows: 225px 1fr;
     min-width: 100%;
     min-height: 100%;
 }
@@ -190,6 +192,7 @@ fieldset {
     grid-template-rows: repeat(2, 1fr);
     gap: 50px;
     padding: 50px;
+    resize: none;
 }
 
 .book-card {
@@ -265,6 +268,7 @@ fieldset {
     background-color: var(--dark-dark-brown);
     background-image: url(./assets/shelf.jpg);
     background-repeat: repeat;
+    max-height: 225px;
 }
 
 .login-with-icon {
