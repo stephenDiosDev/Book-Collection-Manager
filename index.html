@@ -27,17 +27,17 @@
         </div>
         <div class="sidebar">
             <div class="book-form">
-                <form action="" method="post">
+                <form class="form-element" onsubmit="submitBookForm();return false">
                     <fieldset>
                         <legend>Record a Book</legend>
                         <ul class="book-form-list">
                             <li>
-                                <label for="author">Author Name</label>
-                                <input type="text" name="author" id="author" required pattern="[a-zA-Z]+*">
+                                <label for="title">Book Title</label>
+                                <input type="text" name="title" id="title" pattern="^[a-zA-Z0-9]+$" required >
                             </li>
                             <li>
-                                <label for="title">Book Title</label>
-                                <input type="text" name="title" id="title" required pattern="[a-zA-Z]+*">
+                                <label for="author">Author Name</label>
+                                <input type="text" name="author" id="author" pattern="^[a-zA-Z0-9]+$" required >
                             </li>
                             <li>
                                 <label for="num-pages">Number of Current Pages</label>

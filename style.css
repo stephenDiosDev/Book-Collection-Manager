@@ -245,7 +245,7 @@ fieldset {
 .book-title-author {
     font-size: 24px;
     color: aliceblue;
-    display: none;
+    /* display: none; */
 }
 
 .book-card:hover .book-title-author {

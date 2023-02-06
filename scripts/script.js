@@ -1,23 +1,29 @@
 let myLibrary = [];
 let bookshelf = document.querySelector(".content");
+let formContent = document.querySelector(".form-element");
 
 function Book(title, author, currentPages, totalPages, read) {
     this.title = title;
     this.author = author;
     this.currentPages = currentPages;
     this.totalPages = totalPages
-    this.read = true;
+    this.read = read;
 }
 
-// TODO extend this to use the DOM input (pushing the add book btn will construct it)
 function addBookToLibrary(book) {    
     if(book.currentPages >= book.totalPages) {
         book.currentPages = book.totalPages;
         book.read = true;
     }
+
+    if(book.read == true) {
+        book.currentPages = book.totalPages;
+    }
     
-    myLibrary.push(book);
-    displayLibrary();
+    if(!checkForDuplicateBook(book.title, book.author)) {
+        myLibrary.push(book);
+        displayLibrary();
+    }
 }
 
 function resetBookshelf() {
@@ -47,6 +53,13 @@ function displayLibrary() {
         deleteBtn.classList.add("book-delete");
         let deleteIcon = document.createElement('span');
         deleteIcon.classList.add("book-delete-icon");
+        deleteIcon.dataset.bookId = String(myLibrary.indexOf(book));
+
+        deleteBtn.addEventListener('click', (e) => {
+            let bookIndex = e.target.dataset.bookId;    //the index in myLibrary where book is
+            myLibrary.splice(bookIndex, 1);
+            displayLibrary();
+        });
 
         deleteIcon.innerHTML = "&times";    //need innerHTML here because &times is an html symbol
         deleteBtn.appendChild(deleteIcon);
@@ -105,32 +118,62 @@ function displayLibrary() {
 
         bookshelf.appendChild(bookCard);
     });
+    console.log(myLibrary);
 }
 
+function checkForDuplicateBook(title, author) {
+    for(const book of myLibrary) {
+        if(book.title.toLowerCase() === title.toLowerCase() && book.author.toLowerCase() === author.toLowerCase()) {
+            return true;
+        }
+    }
+    return false;
+}
 
-//////////////////////////////////////////////////////////////////
-let formBtn = document.querySelector(".form-submit-button");
+function clearForm() {
+    formContent.reset();
+}
 
-formBtn.addEventListener('click', function(e) {
-    addBookToLibrary(new Book("Test Title", "Test Author", 123, 500, true));
-    console.log("Current library:");
-    console.log(myLibrary);
-});
+function submitBookForm(event) {
+    let data = new FormData(formContent);
+    const value = Object.fromEntries(data.entries());
+    value.read = data.getAll('read');
 
+    let title = String(value['title']);
+    let author = String(value['author']);
+    let currentPages = parseInt(value['num-pages']);
+    let totalPages = parseInt(value['num-pages-total']);
+    let read = false;
 
-
-/*
-    TODO
-
-    parse form into the Javascript book object
-        - need to do error checking here, ensuring the current pages <= total pages
-        - if read == true, currentPages = total pages and slider is checked
+    if(value.read.length > 0) {
+        read = true;
+    }
     
-    when form is submitted, we parse the form into a js book object and add it to library
-        - everytime a new book is added we call display library
-        - we should check to make sure the same book doesn't already exist in the library
-    
-    displayLibrary will clear the bookshelf, and add back each book for now
-        - we can add some kind of performance mode or something to only add new books
+    //check that we don't have a duplicate book already
+    if(checkForDuplicateBook(title, author) == true) {
+        window.alert("That book is already in your library!");
+    }
+    else {
+        addBookToLibrary(new Book(title, author, currentPages, totalPages, read));
+    }
 
-*/
+    clearForm();
+}
+
+function demoData() {
+    let book1 = new Book("Witcher 1", "Sapowski", 234, 300, false);
+    let book2 = new Book("Fellowship of the Ring", "Tolkien", 300, 500, false);
+    let book3 = new Book("The Martian", "Andy Weir",369, 369, true);
+    let book4 = new Book("Dresden Files 1", "Butcher", 125, 126, false);
+    let book5 = new Book("Star Wars", "George Lucas", 500, 500, true);
+    let book6 = new Book("Fellowship of the Ring", "Tolkien", 222, 222, true);
+
+    addBookToLibrary(book1);
+    addBookToLibrary(book2);
+    addBookToLibrary(book3);
+    addBookToLibrary(book4);
+    addBookToLibrary(book5);
+    addBookToLibrary(book6);
+}
+
+demoData();
