@@ -75,6 +75,23 @@ function displayLibrary() {
         let sliderSwitch = document.createElement('span');
         sliderSwitch.classList.add("slider");
 
+        sliderSwitch.addEventListener('click', (e) => {
+            //when clicked we should:
+            //  - update currentPages to be totalPages
+            //  - make currentPages uneditable unless we mark it as unread
+            let bookIndex = e.target.closest('.book-card').dataset.bookId;
+            if(!checkBoxSwitch.checked) {   //was false, is now true
+                myLibrary[bookIndex].read = true;
+                myLibrary[bookIndex].currentPages = myLibrary[bookIndex].totalPages;
+                displayLibrary();
+            }
+            else {  //was true, is now false
+                myLibrary[bookIndex].read = false;
+                myLibrary[bookIndex].currentPages = 0;
+                displayLibrary();
+            }
+        });
+
         checkBoxSwitch.checked = book.read;
 
         if(book.read) {
@@ -110,9 +127,11 @@ function displayLibrary() {
         currentPage.setAttribute("id", "current-pages");
         currentPage.value = book.currentPages;
 
+        if(book.read) {
+            currentPage.setAttribute('readonly', 'true');
+        }
+
         currentPage.addEventListener('input', (e) => {
-            // update current page amt in the library array
-            // if currentpage > totalpage, mark as read!
             let bookIndex = e.target.closest('.book-card').dataset.bookId;
             console.log("myLibrary book at index: " + bookIndex);
             console.log(myLibrary[bookIndex]);
