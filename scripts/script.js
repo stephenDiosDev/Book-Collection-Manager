@@ -53,10 +53,12 @@ function displayLibrary() {
         deleteBtn.classList.add("book-delete");
         let deleteIcon = document.createElement('span');
         deleteIcon.classList.add("book-delete-icon");
-        deleteIcon.dataset.bookId = String(myLibrary.indexOf(book));
+        bookCard.dataset.bookId = String(myLibrary.indexOf(book));
 
         deleteBtn.addEventListener('click', (e) => {
-            let bookIndex = e.target.dataset.bookId;    //the index in myLibrary where book is
+            //the index in myLibrary where book is
+            let bookIndex = e.target.closest('.book-card').dataset.bookId;
+
             myLibrary.splice(bookIndex, 1);
             displayLibrary();
         });
@@ -74,6 +76,10 @@ function displayLibrary() {
         sliderSwitch.classList.add("slider");
 
         checkBoxSwitch.checked = book.read;
+
+        if(book.read) {
+            book.currentPages = book.totalPages;
+        }
 
         switchLabel.appendChild(checkBoxSwitch);
         switchLabel.appendChild(sliderSwitch);
@@ -103,6 +109,23 @@ function displayLibrary() {
         currentPage.setAttribute("name", "current-pages");
         currentPage.setAttribute("id", "current-pages");
         currentPage.value = book.currentPages;
+
+        currentPage.addEventListener('input', (e) => {
+            // update current page amt in the library array
+            // if currentpage > totalpage, mark as read!
+            let bookIndex = e.target.closest('.book-card').dataset.bookId;
+            console.log("myLibrary book at index: " + bookIndex);
+            console.log(myLibrary[bookIndex]);
+            let pageAmt = e.target.value;
+            
+            if(pageAmt >= myLibrary[bookIndex].totalPages) {
+                book.read = true;
+                pageAmt = myLibrary[bookIndex].totalPages;
+                displayLibrary();
+            }
+            myLibrary[bookIndex].currentPages = parseInt(pageAmt);
+            console.log(myLibrary);
+        });
 
         let secondp = document.createElement('p');
         secondp.innerText = "/ " + book.totalPages;
