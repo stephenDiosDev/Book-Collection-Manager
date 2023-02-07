@@ -144,6 +144,16 @@ function displayLibrary() {
             console.log(myLibrary);
         });
 
+        currentPage.addEventListener('keyup', (e) => {
+            if(e.key.toLowerCase() === 'enter') {
+                console.log("ENTER KEY PUSHED");
+                let clickOffEvent = new Event('input');
+                currentPage.blur();
+                currentPage.dispatchEvent(clickOffEvent);
+            }
+        });
+
+
         let secondp = document.createElement('p');
         secondp.innerText = "/ " + book.totalPages;
 
