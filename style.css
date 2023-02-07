@@ -237,6 +237,13 @@ fieldset {
     height: 20%;
     background-color: var(--green);
     border: 2px dashed var(--pale-black);
+    -moz-appearance:textfield; /* Remove arrows on number dial input for firefox */
+}
+/* Remove arrows on number dial input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 #current-pages:focus {
@@ -372,10 +379,6 @@ input:checked + .slider {
     /* background-color: #2196f3; */
     background-color: var(--green);
 }
-
-/* input:focus + .slider {
-    box-shadow: 0 0 1px var(--red);
-} */
 
 input:checked + .slider:before {
     -webkit-transform: translateX(26px);
