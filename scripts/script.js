@@ -210,6 +210,20 @@ function submitBookForm(event) {
     clearForm();
 }
 
+let formCheckbox = document.querySelector(".form-checkbox");
+formCheckbox.addEventListener('change', (e) => {
+    let currentPageInput = document.querySelector("input[name='num-pages']");
+    let totalPageInput = document.querySelector("input[name='num-pages-total']");
+
+    if(formCheckbox.checked) {
+        currentPageInput.value = totalPageInput.value;
+        currentPageInput.setAttribute('disabled', 'disabled');
+    }
+    else {
+        currentPageInput.removeAttribute('disabled');
+    }
+});
+
 function demoData() {
     let book1 = new Book("Witcher 1", "Sapowski", 234, 300, false);
     let book2 = new Book("Fellowship of the Ring", "Tolkien", 300, 500, false);
