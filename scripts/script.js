@@ -144,6 +144,16 @@ function displayLibrary() {
             console.log(myLibrary);
         });
 
+        currentPage.addEventListener('click', (e) => {
+            let bookIndex = e.target.closest('.book-card').dataset.bookId;
+            if(myLibrary[bookIndex].read) {     //the currentPage will be disabled
+                myLibrary[bookIndex].read = false;
+                checkBoxSwitch.checked = false;
+                currentPage.removeAttribute('readonly');
+
+            }
+        });
+
         currentPage.addEventListener('keyup', (e) => {
             if(e.key.toLowerCase() === 'enter') {
                 console.log("ENTER KEY PUSHED");
