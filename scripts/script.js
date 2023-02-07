@@ -178,7 +178,6 @@ function displayLibrary() {
 
         bookshelf.appendChild(bookCard);
     });
-    console.log(myLibrary);
 }
 
 function checkForDuplicateBook(title, author) {
