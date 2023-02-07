@@ -190,6 +190,8 @@ function checkForDuplicateBook(title, author) {
 }
 
 function clearForm() {
+    let numPagesInput = document.querySelector("input[name='num-pages']");
+    numPagesInput.removeAttribute('disabled');
     formContent.reset();
 }
 
