@@ -1,192 +1,203 @@
-let myLibrary = [];
 let bookshelf = document.querySelector(".content");
 let formContent = document.querySelector(".form-element");
 
-function Book(title, author, currentPages, totalPages, read) {
-    this.title = title;
-    this.author = author;
-    this.currentPages = currentPages;
-    this.totalPages = totalPages
-    this.read = read;
-}
+class Library {
+    #collection = [];
 
-function addBookToLibrary(book) {    
-    if(book.currentPages >= book.totalPages) {
-        book.currentPages = book.totalPages;
-        book.read = true;
-    }
-
-    if(book.read == true) {
-        book.currentPages = book.totalPages;
-    }
+    addBookToLibrary(book) {
+        if(book.currentPages >= book.totalPages) {
+            book.currentPages = book.totalPages;
+            book.read = true;
+        }
     
-    if(!checkForDuplicateBook(book.title, book.author)) {
-        myLibrary.push(book);
-        displayLibrary();
-    }
-}
-
-function resetBookshelf() {
-    bookshelf.innerHTML = "";
-}
-
-function displayLibrary() {
-    resetBookshelf();
-
-    myLibrary.forEach(book => {
-        // create divs
-        let bookCard = document.createElement('div');
-        bookCard.classList.add("book-card");
-
-        let bookTopRow = document.createElement('div')
-        bookTopRow.classList.add("book-top-row")
-
-        let bookTitleAuthor = document.createElement('div')
-        bookTitleAuthor.classList.add("book-title-author")
-
-        let bookPages = document.createElement('div')
-        bookPages.classList.add("book-pages")
-
-        ////////////////// book top row //////////////////
-        // delete button with icon
-        let deleteBtn = document.createElement('button');
-        deleteBtn.classList.add("book-delete");
-        let deleteIcon = document.createElement('span');
-        deleteIcon.classList.add("book-delete-icon");
-        bookCard.dataset.bookId = String(myLibrary.indexOf(book));
-
-        deleteBtn.addEventListener('click', (e) => {
-            //the index in myLibrary where book is
-            let bookIndex = e.target.closest('.book-card').dataset.bookId;
-
-            myLibrary.splice(bookIndex, 1);
-            displayLibrary();
-        });
-
-        deleteIcon.innerHTML = "&times";    //need innerHTML here because &times is an html symbol
-        deleteBtn.appendChild(deleteIcon);
-
-        //slider switch
-        let switchLabel = document.createElement('label');
-        switchLabel.classList.add("switch");
-
-        let checkBoxSwitch = document.createElement('input');
-        checkBoxSwitch.setAttribute("type", "checkbox");
-        let sliderSwitch = document.createElement('span');
-        sliderSwitch.classList.add("slider");
-
-        sliderSwitch.addEventListener('click', (e) => {
-            //when clicked we should:
-            //  - update currentPages to be totalPages
-            //  - make currentPages uneditable unless we mark it as unread
-            let bookIndex = e.target.closest('.book-card').dataset.bookId;
-            if(!checkBoxSwitch.checked) {   //was false, is now true
-                myLibrary[bookIndex].read = true;
-                myLibrary[bookIndex].currentPages = myLibrary[bookIndex].totalPages;
-                displayLibrary();
-            }
-            else {  //was true, is now false
-                myLibrary[bookIndex].read = false;
-                myLibrary[bookIndex].currentPages = 0;
-                displayLibrary();
-            }
-        });
-
-        checkBoxSwitch.checked = book.read;
-
-        if(book.read) {
+        if(book.read == true) {
             book.currentPages = book.totalPages;
         }
-
-        switchLabel.appendChild(checkBoxSwitch);
-        switchLabel.appendChild(sliderSwitch);
-
-        bookTopRow.appendChild(deleteBtn);
-        bookTopRow.appendChild(switchLabel);
-
-        ////////////////// book title author //////////////////
-        let bookTitle = document.createElement('h3');
-        bookTitle.innerText = book.title;
-
-        let bookAuthor = document.createElement('h3');
-        bookAuthor.innerText = book.author;
-
-        bookTitleAuthor.appendChild(bookTitle);
-        bookTitleAuthor.appendChild(bookAuthor);
-
-        ////////////////// book pages //////////////////
-        let firstp = document.createElement('p');
-        firstp.innerText = "Pages: ";
-
-        let currentPage = document.createElement('input');
-        currentPage.setAttribute("type", "number");
-        currentPage.setAttribute("min", "1");
-        currentPage.setAttribute("name", "current-pages");
-        currentPage.setAttribute("id", "current-pages");
-        currentPage.value = book.currentPages;
-
-        if(book.read) {
-            currentPage.setAttribute('readonly', 'true');
-        }
-
-        currentPage.addEventListener('input', (e) => {
-            let bookIndex = e.target.closest('.book-card').dataset.bookId;
-            console.log("myLibrary book at index: " + bookIndex);
-            console.log(myLibrary[bookIndex]);
-            let pageAmt = e.target.value;
-            
-            if(pageAmt >= myLibrary[bookIndex].totalPages) {
-                book.read = true;
-                pageAmt = myLibrary[bookIndex].totalPages;
-                displayLibrary();
-            }
-            myLibrary[bookIndex].currentPages = parseInt(pageAmt);
-            console.log(myLibrary);
-        });
-
-        currentPage.addEventListener('click', (e) => {
-            let bookIndex = e.target.closest('.book-card').dataset.bookId;
-            if(myLibrary[bookIndex].read) {     //the currentPage will be disabled
-                myLibrary[bookIndex].read = false;
-                checkBoxSwitch.checked = false;
-                currentPage.removeAttribute('readonly');
-
-            }
-        });
-
-        currentPage.addEventListener('keyup', (e) => {
-            if(e.key.toLowerCase() === 'enter') {
-                console.log("ENTER KEY PUSHED");
-                let clickOffEvent = new Event('input');
-                currentPage.blur();
-                currentPage.dispatchEvent(clickOffEvent);
-            }
-        });
-
-
-        let secondp = document.createElement('p');
-        secondp.innerText = "/ " + book.totalPages;
-
-        bookPages.appendChild(firstp);
-        bookPages.appendChild(currentPage);
-        bookPages.appendChild(secondp);
-
-        //combine everything
-        bookCard.appendChild(bookTopRow);
-        bookCard.appendChild(bookTitleAuthor);
-        bookCard.appendChild(bookPages);
-
-        bookshelf.appendChild(bookCard);
-    });
-}
-
-function checkForDuplicateBook(title, author) {
-    for(const book of myLibrary) {
-        if(book.title.toLowerCase() === title.toLowerCase() && book.author.toLowerCase() === author.toLowerCase()) {
-            return true;
+        
+        if(!this.checkForDuplicateBook(book.title, book.author)) {
+            this.#collection.push(book);
+            this.displayLibrary();
         }
     }
-    return false;
+
+    checkForDuplicateBook(title, author) {
+        for(const book of this.#collection) {
+            if(book.title.toLowerCase() === title.toLowerCase() && book.author.toLowerCase() === author.toLowerCase()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    displayLibrary() {
+        this.resetBookshelf();
+
+        this.#collection.forEach(book => {
+            // create divs
+            let bookCard = document.createElement('div');
+            bookCard.classList.add("book-card");
+    
+            let bookTopRow = document.createElement('div')
+            bookTopRow.classList.add("book-top-row")
+    
+            let bookTitleAuthor = document.createElement('div')
+            bookTitleAuthor.classList.add("book-title-author")
+    
+            let bookPages = document.createElement('div')
+            bookPages.classList.add("book-pages")
+    
+            ////////////////// book top row //////////////////
+            // delete button with icon
+            let deleteBtn = document.createElement('button');
+            deleteBtn.classList.add("book-delete");
+            let deleteIcon = document.createElement('span');
+            deleteIcon.classList.add("book-delete-icon");
+            bookCard.dataset.bookId = String(this.#collection.indexOf(book));
+    
+            deleteBtn.addEventListener('click', (e) => {
+                //the index in myLibrary where book is
+                let bookIndex = e.target.closest('.book-card').dataset.bookId;
+    
+                this.#collection.splice(bookIndex, 1);
+                this.displayLibrary();
+            });
+    
+            deleteIcon.innerHTML = "&times";    //need innerHTML here because &times is an html symbol
+            deleteBtn.appendChild(deleteIcon);
+    
+            //slider switch
+            let switchLabel = document.createElement('label');
+            switchLabel.classList.add("switch");
+    
+            let checkBoxSwitch = document.createElement('input');
+            checkBoxSwitch.setAttribute("type", "checkbox");
+            let sliderSwitch = document.createElement('span');
+            sliderSwitch.classList.add("slider");
+    
+            sliderSwitch.addEventListener('click', (e) => {
+                //when clicked we should:
+                //  - update currentPages to be totalPages
+                //  - make currentPages uneditable unless we mark it as unread
+                let bookIndex = e.target.closest('.book-card').dataset.bookId;
+                if(!checkBoxSwitch.checked) {   //was false, is now true
+                    this.#collection[bookIndex].read = true;
+                    this.#collection[bookIndex].currentPages = this.#collection[bookIndex].totalPages;
+                    this.displayLibrary();
+                }
+                else {  //was true, is now false
+                    this.#collection[bookIndex].read = false;
+                    this.#collection[bookIndex].currentPages = 0;
+                    this.displayLibrary();
+                }
+            });
+    
+            checkBoxSwitch.checked = book.read;
+    
+            if(book.read) {
+                book.currentPages = book.totalPages;
+            }
+    
+            switchLabel.appendChild(checkBoxSwitch);
+            switchLabel.appendChild(sliderSwitch);
+    
+            bookTopRow.appendChild(deleteBtn);
+            bookTopRow.appendChild(switchLabel);
+    
+            ////////////////// book title author //////////////////
+            let bookTitle = document.createElement('h3');
+            bookTitle.innerText = book.title;
+    
+            let bookAuthor = document.createElement('h3');
+            bookAuthor.innerText = book.author;
+    
+            bookTitleAuthor.appendChild(bookTitle);
+            bookTitleAuthor.appendChild(bookAuthor);
+    
+            ////////////////// book pages //////////////////
+            let firstp = document.createElement('p');
+            firstp.innerText = "Pages: ";
+    
+            let currentPage = document.createElement('input');
+            currentPage.setAttribute("type", "number");
+            currentPage.setAttribute("min", "1");
+            currentPage.setAttribute("name", "current-pages");
+            currentPage.setAttribute("id", "current-pages");
+            currentPage.value = book.currentPages;
+    
+            if(book.read) {
+                currentPage.setAttribute('readonly', 'true');
+            }
+    
+            currentPage.addEventListener('input', (e) => {
+                let bookIndex = e.target.closest('.book-card').dataset.bookId;
+                console.log("myLibrary book at index: " + bookIndex);
+                console.log(this.#collection[bookIndex]);
+                let pageAmt = e.target.value;
+                
+                if(pageAmt >= this.#collection[bookIndex].totalPages) {
+                    book.read = true;
+                    pageAmt = this.#collection[bookIndex].totalPages;
+                    this.displayLibrary();
+                }
+                this.#collection[bookIndex].currentPages = parseInt(pageAmt);
+                console.log(this.#collection);
+            });
+    
+            currentPage.addEventListener('click', (e) => {
+                let bookIndex = e.target.closest('.book-card').dataset.bookId;
+                if(this.#collection[bookIndex].read) {     //the currentPage will be disabled
+                    this.#collection[bookIndex].read = false;
+                    checkBoxSwitch.checked = false;
+                    currentPage.removeAttribute('readonly');
+    
+                }
+            });
+    
+            currentPage.addEventListener('keyup', (e) => {
+                if(e.key.toLowerCase() === 'enter') {
+                    console.log("ENTER KEY PUSHED");
+                    let clickOffEvent = new Event('input');
+                    currentPage.blur();
+                    currentPage.dispatchEvent(clickOffEvent);
+                }
+            });
+    
+    
+            let secondp = document.createElement('p');
+            secondp.innerText = "/ " + book.totalPages;
+    
+            bookPages.appendChild(firstp);
+            bookPages.appendChild(currentPage);
+            bookPages.appendChild(secondp);
+    
+            //combine everything
+            bookCard.appendChild(bookTopRow);
+            bookCard.appendChild(bookTitleAuthor);
+            bookCard.appendChild(bookPages);
+    
+            bookshelf.appendChild(bookCard);
+        });
+    }
+
+    resetBookshelf() {
+        bookshelf.innerHTML = "";
+    }
+}
+
+class Book {
+    title;
+    author;
+    currentPages;
+    totalPages;
+    read;
+
+    constructor(title, author, currentPages, totalPages, read) {
+        this.title = title;
+        this.author = author;
+        this.currentPages = currentPages;
+        this.totalPages = totalPages;
+        this.read = read;
+    }
 }
 
 function clearForm() {
@@ -211,11 +222,11 @@ function submitBookForm(event) {
     }
     
     //check that we don't have a duplicate book already
-    if(checkForDuplicateBook(title, author) == true) {
+    if(myLibrary.checkForDuplicateBook(title, author) == true) {
         window.alert("That book is already in your library!");
     }
     else {
-        addBookToLibrary(new Book(title, author, currentPages, totalPages, read));
+        myLibrary.addBookToLibrary(new Book(title, author, currentPages, totalPages, read));
     }
 
     clearForm();
@@ -243,12 +254,13 @@ function demoData() {
     let book5 = new Book("Star Wars", "George Lucas", 500, 500, true);
     let book6 = new Book("Fellowship of the Ring", "Tolkien", 222, 222, true);
 
-    addBookToLibrary(book1);
-    addBookToLibrary(book2);
-    addBookToLibrary(book3);
-    addBookToLibrary(book4);
-    addBookToLibrary(book5);
-    addBookToLibrary(book6);
+    myLibrary.addBookToLibrary(book1);
+    myLibrary.addBookToLibrary(book2);
+    myLibrary.addBookToLibrary(book3);
+    myLibrary.addBookToLibrary(book4);
+    myLibrary.addBookToLibrary(book5);
+    myLibrary.addBookToLibrary(book6);
 }
 
+let myLibrary = new Library();
 demoData();
